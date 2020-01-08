@@ -148,7 +148,7 @@ x509.genkey
 /compile_commands.json
 
 
-#added by fwu
+# added by fwu
 *.log
 arch/arm/boot/compressed/piggy.gzip
 arch/arm/boot/zImage-dtb
@@ -159,3 +159,7 @@ output/
 scripts/kconfig/zconf.hash.c
 uImage*
 *.bak
+
+
+# no more config needed
+!/.config
