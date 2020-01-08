@@ -164,14 +164,14 @@ ar9003_set_txdesc(struct ath_hw *ah, void *ds, struct ath_tx_info *i)
 	if (rate1 >= 0x80 || rate2 >= 0x80 || rate3 >= 0x80) {
 		WRITE_ONCE(ads->ctl19, 0);
 		WRITE_ONCE(ads->ctl13, ads->ctl12 &
-			~(AR_xmit_data_tries1 | AR_xmit_data_tries2 | AR_xmit_data_tries3);
+			~(AR_xmit_data_tries1 | AR_xmit_data_tries2 | AR_xmit_data_tries3));
 		WRITE_ONCE(ads->ctl20, ads->ctl20 & 0x3f000000);
 		WRITE_ONCE(ads->ctl21, ads->ctl21 & 0x3f000000);
 		WRITE_ONCE(ads->ctl22, ads->ctl22 & 0x3f000000);
 	} else if (rate4 >= 0x80) {
 		WRITE_ONCE(ads->ctl19, 0);
 	} else {
-		WRITE_ONCE(ads->ctl19, AR_NOT_Sounding);
+		WRITE_ONCE(ads->ctl19, AR_Not_Sounding);
 	}
 }
 
