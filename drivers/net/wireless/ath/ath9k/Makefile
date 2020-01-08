@@ -1,4 +1,7 @@
 # SPDX-License-Identifier: ISC
+
+obj-m += ar9003_csi.o
+
 ath9k-y +=	beacon.o \
 		gpio.o \
 		init.o \
