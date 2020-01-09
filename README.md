@@ -11,7 +11,7 @@ This is a Linux **5.4** kernel source for Banana Pi R2 (BPI-R2) which includes [
 #### A - Install Prebuilts
 
 + [Debian Image](https://go.wldh.org/r2-atheros-img) : This image is a result of `dd` of 8GB sdcard.
-+ [Build Output](https://go.wldh.org/r2-atheros-patch) : This is a latest verified output of "pack" option at method B.
++ [Build Output](https://go.wldh.org/r2-atheros-patch) : This is a latest csitool-runability-checked output of "pack" option at method B.
 
 #### B - Build Yourself
 
@@ -26,7 +26,7 @@ If you build it directly on the BananaPi-R2 you do not need the crosscompile-pac
 Then build using with default configuration:
 
 ```sh
-  ./build.sh
+./build.sh
 ```
 
 The option "pack" creates a tar.gz-file which contains folders `BPI-BOOT` (content of boot-partition aka `/boot`) and `BPI-ROOT` (content for rootfs aka `/`).
