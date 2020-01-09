@@ -1,12 +1,12 @@
 # BPI-R2 Atheros CSITool Kernel
 
 <a href="https://travis-ci.com/wldh-g/BPI-R2-Atheros-CSITool" target="_blank">
-    <img src="https://travis-ci.com/wldh-g/BPI-R2-Atheros-CSITool?branch=5.4-main" alt="Build status 5.4-main" />
+    <img src="https://travis-ci.com/wldh-g/BPI-R2-Atheros-CSITool.svg?branch=5.4-main" alt="Build status 5.4-main" />
 </a>
 
 This is a Linux **5.4** kernel source for Banana Pi R2 (BPI-R2) which includes [Atheros CSI tool](https://github.com/xieyaxiongfly/Atheros-CSI-Tool).
 
-#### How To Build and Install?
+### How To Build and Install?
 
 ###### A - Install prebuilt image
 
@@ -35,7 +35,6 @@ Simply backup your existing /boot/bananapi/bpi-r2/linux/uImage and unpack the co
 
 You can also install direct to sd-card which makes a backup of kernelfile, here you have to change your uEnv.txt if you use a new filename (by default it's containing kernelversion.)
 
-License
--------
+### License
 
 GPL-2.0
