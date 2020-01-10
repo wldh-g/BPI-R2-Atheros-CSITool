@@ -35,6 +35,13 @@ Simply backup your existing `/boot/bananapi/bpi-r2/linux/uImage` and unpack the 
 
 You can also install direct to sd-card which makes a backup of kernelfile, here you have to change your `uEnv.txt` if you use a new filename (by default it's containing kernelversion.)
 
-### License
+### How To Get the CSI?
 
-GPL-2.0
+Look [here](https://github.com/wldh-g/BPI-R2-Atheros-CSITool-App#readme).  
+
+### Authors and License
+
+- Base Linux Kernel: Linux Kernel Contributors, GPL-2.0, optimized for BPI-R2 by [frank-w](https://github.com/frank-w).
+
+- ath9k CSITool Driver: Yaxiong Xie ([Project Homepage](https://wands.sg/research/wifi/AtherosCSI/).
+
