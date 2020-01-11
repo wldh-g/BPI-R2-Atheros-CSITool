@@ -18,6 +18,14 @@ This is a Linux **5.4** kernel source for Banana Pi R2 (BPI-R2) which includes [
   There is CSI-Collector app on home directory. To use them, read [this readme](https://github.com/wldh-g/BPI-R2-Atheros-CSITool-App).
 + [Build Output](https://go.wldh.org/r2-atheros-patch)\
   This is a latest csitool-runability-checked output of "pack" option at method B.
+  
+After install the sdcard image, you can extend your partition to the end of the sdcard using below commands in root shell:
+
+```sh
+apt-get install cloud-guest-utils
+growpart /dev/mmcblk0 2
+resize2fs /dev/mmcblk0p2
+```
 
 #### B - Build Yourself
 
@@ -47,7 +55,7 @@ Look [here](https://github.com/wldh-g/BPI-R2-Atheros-CSITool-App#readme).
 
 ### Authors and License
 
-- Base Linux Kernel: Linux Kernel Contributors, GPL-2.0, optimized for BPI-R2 by [frank-w](https://github.com/frank-w).
+- Base Linux Kernel: Linux Kernel Contributors, GPL-2.0, optimized and extended for BPI-R2 by [frank-w](https://github.com/frank-w).
 
-- ath9k CSITool Driver: Yaxiong Xie ([Project Homepage](https://wands.sg/research/wifi/AtherosCSI/).
+- ath9k CSITool Driver: Yaxiong Xie ([Project Homepage](https://wands.sg/research/wifi/AtherosCSI/)).
 
