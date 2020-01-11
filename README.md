@@ -10,8 +10,14 @@ This is a Linux **5.4** kernel source for Banana Pi R2 (BPI-R2) which includes [
 
 #### A - Install Prebuilts
 
-+ [Debian Image](https://go.wldh.org/r2-atheros-img) : This image is a result of `dd` of 8GB sdcard.
-+ [Build Output](https://go.wldh.org/r2-atheros-patch) : This is a latest csitool-runability-checked output of "pack" option at method B.
++ [Debian Image](https://go.wldh.org/r2-atheros-img)\
+  This image is a result of `dd` of 8GB sdcard and only kernel is installed. ID: `root` \ PWD: `bananapi`.
++ [Debian Appready Image](https://go.wldh.org/r2-atheros-full-img)\
+  This is also an image of 8GB sdcard, and all prerequisites are installed. ID: `momo` \ PWD: `momo`.\
+  Default shell is [fish](https://fishshell.com/) shell, you can change it to `bash` by typing `chsh momo /bin/bash`.\
+  There is CSI-Collector app on home directory. To use them, read [this readme](https://github.com/wldh-g/BPI-R2-Atheros-CSITool-App).
++ [Build Output](https://go.wldh.org/r2-atheros-patch)\
+  This is a latest csitool-runability-checked output of "pack" option at method B.
 
 #### B - Build Yourself
 
