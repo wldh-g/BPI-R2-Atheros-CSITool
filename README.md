@@ -1,7 +1,7 @@
 # BPI-R2 Atheros CSITool Kernel
 
 <a href="https://travis-ci.com/wldh-g/BPI-R2-Atheros-CSITool" target="_blank">
-    <img src="https://travis-ci.com/wldh-g/BPI-R2-Atheros-CSITool.svg?branch=5.4-main" alt="Build status 5.4-main" />
+  <img src="https://travis-ci.com/wldh-g/BPI-R2-Atheros-CSITool.svg?branch=5.4-main" alt="Build status" />
 </a>
 
 This is a Linux **5.4** kernel source for Banana Pi R2 (BPI-R2) which includes [Atheros CSI tool](https://github.com/xieyaxiongfly/Atheros-CSI-Tool).
@@ -18,7 +18,7 @@ This is a Linux **5.4** kernel source for Banana Pi R2 (BPI-R2) which includes [
   There is CSI-Collector app on home directory. To use them, read [this readme](https://github.com/wldh-g/BPI-R2-Atheros-CSITool-App).
 + [Build Output](https://go.wldh.org/r2-atheros-patch) (Jan 13, 2020)\
   This is a latest csitool-runability-checked output of "pack" option at method B.
-  
+
 After install the sdcard image, you can extend your partition to the end of the sdcard using below commands in root shell:
 
 ```sh
@@ -26,6 +26,8 @@ apt-get install cloud-guest-utils
 growpart /dev/mmcblk0 2
 resize2fs /dev/mmcblk0p2
 ```
+
+Check the installation with `dmesg | grep debug_csi`.
 
 #### B - Build Yourself
 
@@ -49,13 +51,14 @@ Simply backup your existing `/boot/bananapi/bpi-r2/linux/uImage` and unpack the 
 
 You can also install direct to sd-card which makes a backup of kernelfile, here you have to change your `uEnv.txt` if you use a new filename (by default it's containing kernelversion.)
 
+Finally, check the installation with `dmesg | grep debug_csi`.
+
 ### How To Get the CSI?
 
-Look [here](https://github.com/wldh-g/BPI-R2-Atheros-CSITool-App#readme).  
+Look [here](https://github.com/wldh-g/BPI-R2-Atheros-CSITool-App#readme).
 
 ### Authors and License
 
 - Base Linux Kernel: Linux Kernel Contributors, GPL-2.0, optimized and extended for BPI-R2 by [frank-w](https://github.com/frank-w).
 
 - ath9k CSITool Driver: Yaxiong Xie ([Project Homepage](https://wands.sg/research/wifi/AtherosCSI/)).
-
