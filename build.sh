@@ -235,9 +235,10 @@ function pack {
 	prepare_SD
 	echo "pack..."
 	olddir=$(pwd)
+	cp install.sh ../SD/install.sh
 	cd ../SD
 	fname=${board}_${switch}${kernver}${gitbranch}.tar.gz
-	tar -cz --owner=root --group=root -f $fname BPI-BOOT BPI-ROOT
+	tar -cz --owner=root --group=root -f $fname BPI-BOOT BPI-ROOT install.sh
 	md5sum $fname > $fname.md5
 	ls -lh $(pwd)"/"$fname
 	cd $olddir
