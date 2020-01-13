@@ -545,7 +545,7 @@ function build {
 		exec 3> >(tee build.log)
 		export LOCALVERSION="${gitbranch}"
 		#MAKEFLAGS="V=1"
-		make -T2 ${MAKEFLAGS} ${CFLAGS} 2>&3 #&& make modules_install 2>&3
+		make -j2 ${MAKEFLAGS} ${CFLAGS} 2>&3 #&& make modules_install 2>&3
 		ret=$?
 		exec 3>&-
 
@@ -576,7 +576,7 @@ function build {
 
 				echo "build uImage without appended DTB..."
 				export DTC_FLAGS=-@
-				make -T2 ${CFLAGS} CONFIG_ARM_APPENDED_DTB=n &>/dev/null #output/errors can be ignored because they are printed before
+				make -j2 ${CFLAGS} CONFIG_ARM_APPENDED_DTB=n &>/dev/null #output/errors can be ignored because they are printed before
 				ret=$?
 				if [[ $ret == 0 ]]; then
 					cp arch/arm/boot/dts/mt7623n-bananapi-bpi-r2.dtb $board.dtb

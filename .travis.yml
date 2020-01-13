@@ -6,7 +6,7 @@ dist: bionic
 cache: ccache
 
 git:
-  depth: 10
+  depth: 1
   quiet: false
 
 if: tag IS blank
