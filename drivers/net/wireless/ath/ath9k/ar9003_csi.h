@@ -51,7 +51,8 @@ struct csi_pkt_status {
 		u_int8_t    ChanBW;      /* receiving channel bandwidth */
 		u_int8_t    num_tones;   /* number of tones (subcarriers) */
 		u_int8_t    nr;          /* number of receiving antennas */
-		u_int8_t    nc;          /* number of transmitting anteannas */
+		u_int8_t    nc;          /* number of transmitting antennas in CSI */
+		u_int8_t    nc_actual;   /* number of transmitting antennas */
 
 
 		u_int8_t    rssi;        /* rx frame RSSI */

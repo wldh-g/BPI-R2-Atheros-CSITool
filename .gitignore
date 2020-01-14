@@ -163,3 +163,8 @@ uImage*
 
 # no more config needed
 !/.config
+
+
+# go away vscode
+.vscode/
+
