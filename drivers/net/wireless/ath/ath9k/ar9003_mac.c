@@ -504,6 +504,8 @@ int ath9k_hw_process_rxdesc_edma(struct ath_hw *ah, struct ath_rx_status *rxs,
 	void *data_addr;
 	u_int16_t data_len;
 
+	bool cond_crc, cond_more, cond_ht;
+
 	if ((rxsp->status11 & AR_RxDone) == 0)
 		return -EINPROGRESS;
 
@@ -602,18 +604,24 @@ int ath9k_hw_process_rxdesc_edma(struct ath_hw *ah, struct ath_rx_status *rxs,
 	if (rxsp->status11 & AR_KeyMiss)
 		rxs->rs_status |= ATH9K_RXERR_KEYMISS;
 
-	if (rxs->rs_rate >= 0x80) {
-		data_len = rxs->rs_datalen;
-		data_addr = buf_addr + 48;
+	data_len = rxs->rs_datalen;
+	data_addr = buf_addr + 48;
 
-		if (rxsp->status11 & AR_CRCErr) {
-			csi_record_payload(data_addr, data_len);
-			printk("debug_csi: CRC Error detected.\n");
-		} else if (rxs->rs_more == 1) {
-			csi_record_payload(data_addr, data_len);
-		}
+	cond_crc = (rxsp->status11 & AR_CRCErr) > 0;
+	cond_more = rxs->rs_more == 1;
+	cond_ht = rxs->rs_rate >= 0x80;
 
+	if ((!cond_crc && cond_more) || (cond_crc && cond_ht)) {
+		csi_record_payload(data_addr, data_len);
+	}
+
+	if (cond_ht) {
+		ath9k_hw_getnf(ah, ah->curchan);
 		csi_record_status(ah, rxs, rxsp, data_addr);
+
+		if (cond_crc) {
+			printk("debug_csi: CRC Error detected.\n");
+		}
 	}
 
 	return 0;

@@ -26,7 +26,7 @@
 #include "mac.h"
 #include "hw.h"
 
-// Generally, buffere with 20480 bits is enough
+// Generally, buffer with 20480 bits is enough
 // You can change the size freely
 #define Tx_Buf_LEN 20480
 
@@ -138,12 +138,10 @@ static int __init csi_init(void)
 static void __exit csi_exit(void)
 {
 	/* delete and unregister the devices we have created and registered */
-	device_destroy(ebbcharClass,
-		       MKDEV(majorNumber, 0)); // remove the device
+	device_destroy(ebbcharClass, MKDEV(majorNumber, 0)); // remove the device
 	class_unregister(ebbcharClass); // unregister the device class
 	class_destroy(ebbcharClass); // remove the device class
-	unregister_chrdev(majorNumber,
-			  DEVICE_NAME); // unregister the major number
+	unregister_chrdev(majorNumber, DEVICE_NAME); // unregister the major number
 	printk(KERN_INFO "debug_csi: Goodbye CSI device!\n");
 }
 
@@ -171,12 +169,12 @@ static ssize_t csi_read(struct file *file, char __user *user_buf, size_t count,
 	u_int16_t csi_len, payload_len;
 	struct ath9k_csi *csi;
 	struct csi_pkt_status *RxStatus;
+	int copy_result;
 
 	*ppos = 0;
 
 	if (csi_head == csi_tail) { // wait until time out
-		wait_event_interruptible_timeout(csi_queue,
-						 csi_head != csi_tail, 5 * HZ);
+		wait_event_interruptible_timeout(csi_queue, csi_head != csi_tail, 5 * HZ);
 	}
 	if (csi_head != csi_tail) {
 		csi = (struct ath9k_csi *)&csi_buf[csi_tail];
@@ -192,24 +190,24 @@ static ssize_t csi_read(struct file *file, char __user *user_buf, size_t count,
 		memcpy(tx_buf, RxStatus, 23); // copy the status to the buffer
 		len += 23;
 
-		memcpy(tx_buf + len, &payload_len,
-		       2); // record the length of payload
+		memcpy(tx_buf + len, &payload_len, 2); // record the length of payload
 		len += 2;
 
 		if (csi_len > 0) {
-			memcpy(tx_buf + len, csi_buf_addr,
-			       csi_len); // copy csi to the buffer
+			memcpy(tx_buf + len, csi_buf_addr, csi_len); // copy csi to the buffer
 			len += csi_len;
 		}
 
-		memcpy(tx_buf + len, payload_buf_addr,
-		       payload_len); // copy payload to the buffer
+		memcpy(tx_buf + len, payload_buf_addr, payload_len); // copy payload to the buffer
 		len += payload_len;
 
 		memcpy(tx_buf + len, &len, 2); // record how many bytes we copy
 		len += 2;
 
-		copy_to_user(user_buf, tx_buf, len); // COPY
+		copy_result = copy_to_user(user_buf, tx_buf, len); // COPY
+		if (copy_result != 0) {
+			printk(KERN_ALERT "debuf_csi: csi copy failed (%d bytes remained)\n", copy_result);
+		}
 
 		csi_tail = (csi_tail + 1) & 0x0000000F; // delete the buffer
 		return len;
@@ -237,7 +235,7 @@ void csi_record_payload(void *data, u_int16_t data_len)
 		memcpy((void *)(csi->payload_buf), data,
 		       data_len); // copy the payload
 		csi->payload_len =
-			data_len + 1; // record the payload length (bytes)
+			data_len; // + 1; // record the payload length (bytes)
 		csi_valid = 1;
 	}
 }
@@ -248,7 +246,7 @@ void csi_record_status(struct ath_hw *ah, struct ath_rx_status *rxs,
 {
 	struct ath9k_csi *csi;
 
-	u_int8_t nr, nc;
+	u_int8_t nr; //, nc;
 	u_int8_t chan_BW;
 	u_int8_t rx_not_sounding;
 	u_int8_t rx_hw_upload_data;
@@ -278,8 +276,8 @@ void csi_record_status(struct ath_hw *ah, struct ath_rx_status *rxs,
 		csi->pkt_status.ChanBW = chan_BW; // channel bandwidth
 		nr = ar9300_get_nrx_csi(ah);
 		csi->pkt_status.nr = nr; // rx antennas number
-		nc = ar9300_get_ntx_csi(ah);
-		csi->pkt_status.nc_actual = nc; // tx antennas number
+		//nc = ar9300_get_ntx_csi(ah);
+		//csi->pkt_status.nc_actual = nc; // tx antennas number from MASK
 
 		csi->pkt_status.phyerr = rxs->rs_phyerr; // PHY layer error code
 
@@ -309,8 +307,10 @@ void csi_record_status(struct ath_hw *ah, struct ath_rx_status *rxs,
 			printk("debug_csi: Error happends for channel bandwidth recording!!\n");
 		}
 
-		csi->pkt_status.nc = (int) (rxs->rs_datalen * BITS_PER_BYTE) /
-                        (int) (BITS_PER_COMPLEX_SYMBOL * csi->pkt_status.nr * csi->pkt_status.num_tones);
+		csi->pkt_status.nc =
+			(int)(rxs->rs_datalen * BITS_PER_BYTE) /
+			(int)(BITS_PER_COMPLEX_SYMBOL * csi->pkt_status.nr *
+			      csi->pkt_status.num_tones); // tx antennas number
 
 		/* copy the csi value to the allocated csi buffer */
 		if (rxs->rs_datalen > 0 && rx_hw_upload_data == 1 &&
