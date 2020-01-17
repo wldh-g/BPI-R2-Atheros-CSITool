@@ -106,6 +106,10 @@
 
 &btif {
 	status = "okay";
+
+        bluetooth {
+                status = "okay";
+        };
 };
 
 &cir {
@@ -143,6 +147,56 @@
 	mdio: mdio-bus {
 		#address-cells = <1>;
 		#size-cells = <0>;
+
+		switch@0 {
+			compatible = "mediatek,mt7531";
+			reg = <0>;
+			reset-gpios = <&pio 54 0>;
+
+			ports {
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				port@0 {
+					reg = <0>;
+					label = "wan";
+				};
+
+				port@1 {
+					reg = <1>;
+					label = "lan0";
+				};
+
+				port@2 {
+					reg = <2>;
+					label = "lan1";
+				};
+
+				port@3 {
+					reg = <3>;
+					label = "lan2";
+				};
+
+				port@4 {
+					reg = <4>;
+					label = "lan3";
+				};
+
+				port@6 {
+					reg = <6>;
+					label = "cpu";
+					ethernet = <&gmac0>;
+					phy-mode = "2500base-x";
+
+					fixed-link {
+						speed = <2500>;
+						full-duplex;
+						pause;
+					};
+				};
+			};
+		};
+
 	};
 };
 
@@ -207,14 +261,21 @@
 	};
 };
 
-&pcie {
+&pcie0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&pcie0_pins>, <&pcie1_pins>;
+	pinctrl-0 = <&pcie0_pins>;
 	status = "okay";
 
 	pcie@0,0 {
 		status = "okay";
 	};
+};
+
+
+&pcie1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pcie1_pins>;
+	status = "okay";
 
 	pcie@1,0 {
 		status = "okay";
@@ -228,7 +289,7 @@
 	asm_sel {
 		gpio-hog;
 		gpios = <90 GPIO_ACTIVE_HIGH>;
-		output-high;
+		output-low;
 	};
 
 	/* eMMC is shared pin with parallel NAND */
@@ -497,11 +558,11 @@
 };
 
 &sata {
-	status = "disable";
+	status = "okay";
 };
 
 &sata_phy {
-	status = "disable";
+	status = "okay";
 };
 
 &spi0 {
@@ -541,5 +602,9 @@
 &watchdog {
 	pinctrl-names = "default";
 	pinctrl-0 = <&watchdog_pins>;
+	status = "okay";
+};
+
+&wmac {
 	status = "okay";
 };
