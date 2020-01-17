@@ -246,7 +246,7 @@ void csi_record_status(struct ath_hw *ah, struct ath_rx_status *rxs,
 {
 	struct ath9k_csi *csi;
 
-	u_int8_t nr; //, nc;
+	u_int8_t nr; // , nc;
 	u_int8_t chan_BW;
 	u_int8_t rx_not_sounding;
 	u_int8_t rx_hw_upload_data;
@@ -276,8 +276,8 @@ void csi_record_status(struct ath_hw *ah, struct ath_rx_status *rxs,
 		csi->pkt_status.ChanBW = chan_BW; // channel bandwidth
 		nr = ar9300_get_nrx_csi(ah);
 		csi->pkt_status.nr = nr; // rx antennas number
-		//nc = ar9300_get_ntx_csi(ah);
-		//csi->pkt_status.nc_actual = nc; // tx antennas number from MASK
+		// nc = ar9300_get_ntx_csi(ah);
+		// csi->pkt_status.nc_actual = nc; // actual tx antennas number
 
 		csi->pkt_status.phyerr = rxs->rs_phyerr; // PHY layer error code
 
@@ -286,7 +286,8 @@ void csi_record_status(struct ath_hw *ah, struct ath_rx_status *rxs,
 		csi->pkt_status.rssi_ctl1 = rxs->rs_rssi_ctl[1];
 		csi->pkt_status.rssi_ctl2 = rxs->rs_rssi_ctl[2];
 
-		csi->pkt_status.noise = ah->noise; // noise
+		// csi->pkt_status.noise = ah->noise; // real noise
+		csi->pkt_status.noise = 0; // noise
 
 		csi->pkt_status.rate = rxs->rs_rate; // data rate
 
@@ -304,7 +305,7 @@ void csi_record_status(struct ath_hw *ah, struct ath_rx_status *rxs,
 			csi->pkt_status.num_tones = 114; // 40MHz Channel
 		} else {
 			csi->pkt_status.num_tones = 56; // 20MHz Channel
-			printk("debug_csi: Error happends for channel bandwidth recording!!\n");
+			printk("debug_csi: Error in channel bandwidth recording!!\n");
 		}
 
 		csi->pkt_status.nc =

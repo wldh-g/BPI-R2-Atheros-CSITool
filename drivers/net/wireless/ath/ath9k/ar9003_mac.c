@@ -612,16 +612,18 @@ int ath9k_hw_process_rxdesc_edma(struct ath_hw *ah, struct ath_rx_status *rxs,
 	cond_ht = rxs->rs_rate >= 0x80;
 
 	if ((!cond_crc && cond_more) || (cond_crc && cond_ht)) {
+		// printk("payload_len: %d", data_len);
 		csi_record_payload(data_addr, data_len);
 	}
 
 	if (cond_ht) {
-		ath9k_hw_getnf(ah, ah->curchan);
+		// printk("csi_len: %d", rxs->rs_datalen);
+		// ath9k_hw_getnf(ah, ah->curchan);
 		csi_record_status(ah, rxs, rxsp, data_addr);
 
-		if (cond_crc) {
+		/* if (cond_crc) {
 			printk("debug_csi: CRC Error detected.\n");
-		}
+		} */
 	}
 
 	return 0;

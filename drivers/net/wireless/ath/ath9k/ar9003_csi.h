@@ -52,7 +52,7 @@ struct csi_pkt_status {
 	u_int8_t num_tones; /* number of tones (subcarriers) */
 	u_int8_t nr; /* number of receiving antennas */
 	u_int8_t nc; /* number of transmitting antennas */
-	//u_int8_t nc_actual;   /* number of transmitting antennas from TXMask */
+	// u_int8_t nc_actual;   /* number of transmitting antennas from TXMask */
 
 	u_int8_t rssi; /* rx frame RSSI [ext, combined] */
 	u_int8_t rssi_ctl0; /* rx frame RSSI [ctl, chain 0] */
@@ -67,7 +67,7 @@ struct ath9k_csi {
 	u_int8_t csi_buf[2800];
 
 	// buffer for the payload, if you send larger than 1500 bytes, change it
-	u_int8_t payload_buf[1500];
+	u_int8_t payload_buf[2500];
 
 	u_int16_t payload_len;
 };
